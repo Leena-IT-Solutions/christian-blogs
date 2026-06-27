@@ -175,6 +175,24 @@
                         <input type="url" wire:model="instagram_link" class="admin-control" placeholder="https://instagram.com/username">
                         @error('instagram_link') <span class="invalid-feedback">{{ $message }}</span> @enderror
                     </div>
+
+                    <div class="admin-form-group">
+                        <label class="admin-label">Twitter / X URL</label>
+                        <input type="url" wire:model="twitter_link" class="admin-control" placeholder="https://twitter.com/username">
+                        @error('twitter_link') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label class="admin-label">YouTube Channel URL</label>
+                        <input type="url" wire:model="youtube_link" class="admin-control" placeholder="https://youtube.com/@channel">
+                        @error('youtube_link') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label class="admin-label">Pinterest URL</label>
+                        <input type="url" wire:model="pinterest_link" class="admin-control" placeholder="https://pinterest.com/username">
+                        @error('pinterest_link') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
                 </div>
 
                 <button type="submit" class="btn" style="width: 100%;">Save All Settings</button>

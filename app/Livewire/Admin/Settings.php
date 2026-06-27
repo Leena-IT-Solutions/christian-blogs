@@ -24,6 +24,9 @@ class Settings extends Component
     public $use_logo_as_favicon = false; // toggle
     public $facebook_link = '';
     public $instagram_link = '';
+    public $twitter_link = '';
+    public $youtube_link = '';
+    public $pinterest_link = '';
 
     // Homepage Hero properties
     public $hero_title = '';
@@ -39,6 +42,9 @@ class Settings extends Component
         'use_logo_as_favicon' => 'nullable|boolean',
         'facebook_link' => 'nullable|url',
         'instagram_link' => 'nullable|url',
+        'twitter_link' => 'nullable|url',
+        'youtube_link' => 'nullable|url',
+        'pinterest_link' => 'nullable|url',
         'hero_title' => 'required|string|max:255',
         'hero_subtitle' => 'required|string|max:500',
     ];
@@ -54,6 +60,9 @@ class Settings extends Component
         $this->use_logo_as_favicon = (bool) Setting::getVal('use_logo_as_favicon', '0');
         $this->facebook_link = Setting::getVal('facebook_link');
         $this->instagram_link = Setting::getVal('instagram_link');
+        $this->twitter_link = Setting::getVal('twitter_link');
+        $this->youtube_link = Setting::getVal('youtube_link');
+        $this->pinterest_link = Setting::getVal('pinterest_link');
 
         // Load Homepage Hero keys
         $this->hero_title = Setting::getVal('hero_title', 'Planted to Prevail');
@@ -71,6 +80,9 @@ class Settings extends Component
         Setting::updateOrCreate(['key' => 'use_logo_as_favicon'], ['value' => $this->use_logo_as_favicon ? '1' : '0']);
         Setting::updateOrCreate(['key' => 'facebook_link'], ['value' => $this->facebook_link]);
         Setting::updateOrCreate(['key' => 'instagram_link'], ['value' => $this->instagram_link]);
+        Setting::updateOrCreate(['key' => 'twitter_link'], ['value' => $this->twitter_link]);
+        Setting::updateOrCreate(['key' => 'youtube_link'], ['value' => $this->youtube_link]);
+        Setting::updateOrCreate(['key' => 'pinterest_link'], ['value' => $this->pinterest_link]);
 
         // Save Homepage Hero keys
         Setting::updateOrCreate(['key' => 'hero_title'], ['value' => $this->hero_title]);
