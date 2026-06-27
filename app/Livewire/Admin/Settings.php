@@ -25,6 +25,10 @@ class Settings extends Component
     public $facebook_link = '';
     public $instagram_link = '';
 
+    // Homepage Hero properties
+    public $hero_title = '';
+    public $hero_subtitle = '';
+
     // SEO properties
     public $seo_home_title = '';
     public $seo_home_description = '';
@@ -46,6 +50,8 @@ class Settings extends Component
         'use_logo_as_favicon' => 'nullable|boolean',
         'facebook_link' => 'nullable|url',
         'instagram_link' => 'nullable|url',
+        'hero_title' => 'required|string|max:255',
+        'hero_subtitle' => 'required|string|max:500',
         'seo_home_title' => 'nullable|string|max:255',
         'seo_home_description' => 'nullable|string|max:500',
         'seo_home_keywords' => 'nullable|string|max:500',
@@ -68,6 +74,10 @@ class Settings extends Component
         $this->use_logo_as_favicon = (bool) Setting::getVal('use_logo_as_favicon', '0');
         $this->facebook_link = Setting::getVal('facebook_link');
         $this->instagram_link = Setting::getVal('instagram_link');
+
+        // Load Homepage Hero keys
+        $this->hero_title = Setting::getVal('hero_title', 'Planted to Prevail');
+        $this->hero_subtitle = Setting::getVal('hero_subtitle', 'Sowing seeds of Truth, nurturing roots of faith, and bearing fruit for the glory of Christ.');
 
         // Load SEO keys
         $this->seo_home_title = Setting::getVal('seo_home_title');
@@ -92,6 +102,10 @@ class Settings extends Component
         Setting::updateOrCreate(['key' => 'use_logo_as_favicon'], ['value' => $this->use_logo_as_favicon ? '1' : '0']);
         Setting::updateOrCreate(['key' => 'facebook_link'], ['value' => $this->facebook_link]);
         Setting::updateOrCreate(['key' => 'instagram_link'], ['value' => $this->instagram_link]);
+
+        // Save Homepage Hero keys
+        Setting::updateOrCreate(['key' => 'hero_title'], ['value' => $this->hero_title]);
+        Setting::updateOrCreate(['key' => 'hero_subtitle'], ['value' => $this->hero_subtitle]);
 
         // Save SEO setting keys
         Setting::updateOrCreate(['key' => 'seo_home_title'], ['value' => $this->seo_home_title ?? '']);

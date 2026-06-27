@@ -1,9 +1,9 @@
 <div>
     <!-- Hero Header -->
     <div class="hero container">
-        <h1 style="font-family: var(--font-heading); color: var(--text-color);">Planted to Prevail</h1>
+        <h1 style="font-family: var(--font-heading); color: var(--text-color);">{{ \App\Models\Setting::getVal('hero_title', 'Planted to Prevail') }}</h1>
         <p style="font-family: var(--font-heading); font-style: italic; color: var(--accent-color); font-size: 1.15rem; max-width: 600px; margin: 0 auto;">
-            Sowing seeds of Truth, nurturing roots of faith, and bearing fruit for the glory of Christ.
+            {{ \App\Models\Setting::getVal('hero_subtitle', 'Sowing seeds of Truth, nurturing roots of faith, and bearing fruit for the glory of Christ.') }}
         </p>
     </div>
 

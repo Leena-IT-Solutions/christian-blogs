@@ -104,6 +104,23 @@
                     @endif
                 </div>
 
+                <!-- Homepage Hero Section Panel Card -->
+                <div class="panel-card">
+                    <h2 class="panel-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">Homepage Hero Section</h2>
+                    
+                    <div class="admin-form-group">
+                        <label class="admin-label">Hero Title</label>
+                        <input type="text" wire:model="hero_title" class="admin-control" placeholder="e.g. Planted to Prevail" required>
+                        @error('hero_title') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group" style="margin-top: 20px;">
+                        <label class="admin-label">Hero Subtitle</label>
+                        <textarea wire:model="hero_subtitle" class="admin-control" style="height: 80px; resize: vertical;" placeholder="e.g. Sowing seeds of Truth, nurturing roots of faith..." required></textarea>
+                        @error('hero_subtitle') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
                 <div class="panel-card">
                     <h2 class="panel-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">About Page Biography</h2>
                     
