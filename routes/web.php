@@ -11,6 +11,7 @@ use App\Livewire\Admin\Posts\Create as PostCreate;
 use App\Livewire\Admin\Posts\Edit as PostEdit;
 use App\Livewire\Admin\Posts\Index as PostIndex;
 use App\Livewire\Admin\Settings;
+use App\Livewire\Admin\SeoSettings;
 use App\Livewire\Contact;
 use App\Livewire\Home;
 use App\Livewire\PostShow;
@@ -63,4 +64,5 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/comments', Comments::class)->name('admin.comments');
     Route::get('/messages', Messages::class)->name('admin.messages');
     Route::get('/settings', Settings::class)->name('admin.settings');
+    Route::get('/seo', SeoSettings::class)->name('admin.seo');
 });

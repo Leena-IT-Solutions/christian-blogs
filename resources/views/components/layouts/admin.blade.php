@@ -136,6 +136,14 @@
                         Settings
                     </a>
                 </li>
+                <li class="admin-nav-item {{ request()->is('admin/seo') ? 'active' : '' }}">
+                    <a href="/admin/seo">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                        SEO Settings
+                    </a>
+                </li>
                 <li class="admin-nav-item" style="margin-top: 12px; border-top: 1px dashed var(--admin-border); padding-top: 12px;">
                     <a href="/">
                         <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
