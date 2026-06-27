@@ -27,6 +27,7 @@ class Settings extends Component
     public $twitter_link = '';
     public $youtube_link = '';
     public $pinterest_link = '';
+    public $theme_color = '#bf9f5a';
 
     // Homepage Hero properties
     public $hero_title = '';
@@ -51,6 +52,7 @@ class Settings extends Component
         'pinterest_link' => 'nullable|url',
         'hero_title' => 'required|string|max:255',
         'hero_subtitle' => 'required|string|max:500',
+        'theme_color' => 'required|string|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
         'footer_quote_text' => 'nullable|string|max:500',
         'footer_quote_author' => 'nullable|string|max:255',
     ];
@@ -69,6 +71,7 @@ class Settings extends Component
         $this->twitter_link = Setting::getVal('twitter_link');
         $this->youtube_link = Setting::getVal('youtube_link');
         $this->pinterest_link = Setting::getVal('pinterest_link');
+        $this->theme_color = Setting::getVal('theme_color', '#bf9f5a');
 
         // Load Homepage Hero keys
         $this->hero_title = Setting::getVal('hero_title', 'Planted to Prevail');
@@ -93,6 +96,8 @@ class Settings extends Component
         Setting::updateOrCreate(['key' => 'twitter_link'], ['value' => $this->twitter_link]);
         Setting::updateOrCreate(['key' => 'youtube_link'], ['value' => $this->youtube_link]);
         Setting::updateOrCreate(['key' => 'pinterest_link'], ['value' => $this->pinterest_link]);
+        Setting::updateOrCreate(['key' => 'theme_color'], ['value' => $this->theme_color]);
+        $this->updateCssThemeFiles($this->theme_color);
 
         // Save Homepage Hero keys
         Setting::updateOrCreate(['key' => 'hero_title'], ['value' => $this->hero_title]);
@@ -157,6 +162,61 @@ class Settings extends Component
         }
 
         session()->flash('message', 'Settings updated successfully.');
+    }
+
+    protected function updateCssThemeFiles($color)
+    {
+        // Sanitize hex color
+        $color = trim($color);
+        if (!preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $color)) {
+            return;
+        }
+
+        // Convert hex to rgb
+        $hex = str_replace('#', '', $color);
+        if (strlen($hex) == 3) {
+            $r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+        } else {
+            $r = hexdec(substr($hex, 0, 2));
+            $g = hexdec(substr($hex, 2, 2));
+            $b = hexdec(substr($hex, 4, 2));
+        }
+
+        // Generate hover color
+        $factor = ($r + $g + $b) / 3 > 128 ? 0.85 : 1.15; // light color -> darker hover, dark color -> lighter hover
+        $hoverR = max(0, min(255, (int)($r * $factor)));
+        $hoverG = max(0, min(255, (int)($g * $factor)));
+        $hoverB = max(0, min(255, (int)($b * $factor)));
+        $hoverHex = sprintf("#%02x%02x%02x", $hoverR, $hoverG, $hoverB);
+
+        // Update public/css/app.css
+        $appCssPath = public_path('css/app.css');
+        if (file_exists($appCssPath)) {
+            $appCssContent = file_get_contents($appCssPath);
+            
+            // Replace variables in :root
+            $appCssContent = preg_replace('/--accent-color:\s*[^;]+;/', "--accent-color: {$color};", $appCssContent);
+            $appCssContent = preg_replace('/--accent-hover:\s*[^;]+;/', "--accent-hover: {$hoverHex};", $appCssContent);
+            $appCssContent = preg_replace('/--accent-light:\s*[^;]+;/', "--accent-light: rgba({$r}, {$g}, {$b}, 0.1);", $appCssContent);
+            $appCssContent = preg_replace('/--glass-border:\s*[^;]+;/', "--glass-border: rgba({$r}, {$g}, {$b}, 0.2);", $appCssContent);
+            
+            file_put_contents($appCssPath, $appCssContent);
+        }
+
+        // Update public/css/admin.css
+        $adminCssPath = public_path('css/admin.css');
+        if (file_exists($adminCssPath)) {
+            $adminCssContent = file_get_contents($adminCssPath);
+            
+            // Replace variables in :root
+            $adminCssContent = preg_replace('/--accent-color:\s*[^;]+;/', "--accent-color: {$color};", $adminCssContent);
+            $adminCssContent = preg_replace('/--accent-hover:\s*[^;]+;/', "--accent-hover: {$hoverHex};", $adminCssContent);
+            $adminCssContent = preg_replace('/--accent-light:\s*[^;]+;/', "--accent-light: rgba({$r}, {$g}, {$b}, 0.15);", $adminCssContent);
+            
+            file_put_contents($adminCssPath, $adminCssContent);
+        }
     }
 
     public function render()

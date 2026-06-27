@@ -102,6 +102,16 @@
                             @error('site_favicon') <span class="invalid-feedback" style="display: block; margin-top: 8px;">{{ $message }}</span> @enderror
                         </div>
                     @endif
+
+                    <!-- Theme Color Picker -->
+                    <div class="admin-form-group" style="margin-top: 24px; border-top: 1px dashed var(--admin-border); padding-top: 20px;">
+                        <label class="admin-label">Theme Primary Color</label>
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <input type="color" wire:model.live="theme_color" class="admin-control" style="width: 60px; height: 40px; padding: 2px; border-radius: var(--radius-sm); cursor: pointer; border: 1px solid var(--admin-border);">
+                            <input type="text" wire:model="theme_color" class="admin-control" placeholder="#bf9f5a" style="max-width: 150px; text-transform: uppercase;">
+                        </div>
+                        <small style="color: var(--admin-text-muted); display: block; margin-top: 8px;">Select a custom theme primary accent color. Changing this color will dynamically rewrite the styles inside CSS files in real-time.</small>
+                    </div>
                 </div>
 
                 <!-- Homepage Hero Section Panel Card -->
