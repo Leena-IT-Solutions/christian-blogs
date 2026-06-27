@@ -43,7 +43,7 @@
             <a href="/admin/posts/create" class="btn" style="text-align: center; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Write New Post</a>
             <a href="/admin/comments" class="btn btn-secondary" style="text-align: center; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Moderate Comments</a>
             <a href="/admin/settings" class="btn btn-secondary" style="text-align: center; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Edit Site Settings</a>
-            <a href="/" target="_blank" class="btn btn-secondary" style="text-align: center; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; border-color: var(--accent-color); color: var(--accent-color);">Visit Public Site</a>
+            <a href="/" class="btn btn-secondary" style="text-align: center; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; border-color: var(--accent-color); color: var(--accent-color);">Visit Public Site</a>
         </div>
     </div>
 </div>
