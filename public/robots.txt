@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /admin/logout
+
+# Crawl-delay for all bots
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://berootedinchrist.com/sitemap.xml
