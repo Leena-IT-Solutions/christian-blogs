@@ -251,6 +251,47 @@ tr:hover td {
     background-color: rgba(255, 255, 255, 0.02);
 }
 
+/* Custom Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    font-family: var(--font-body);
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+    color: #ffffff;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: transparent;
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    font-family: var(--font-body);
+}
+
+.btn-secondary:hover {
+    background-color: var(--admin-border);
+    color: var(--admin-text);
+}
+
 /* Action Buttons */
 .btn-action-group {
     display: flex;
