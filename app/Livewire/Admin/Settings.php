@@ -52,7 +52,7 @@ class Settings extends Component
         'pinterest_link' => 'nullable|url',
         'hero_title' => 'required|string|max:255',
         'hero_subtitle' => 'required|string|max:500',
-        'theme_color' => 'required|string|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+        'theme_color' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'],
         'footer_quote_text' => 'nullable|string|max:500',
         'footer_quote_author' => 'nullable|string|max:255',
     ];
