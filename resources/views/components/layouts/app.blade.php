@@ -197,9 +197,6 @@
     <footer>
         <div class="container">
             <p>&copy; {{ date('Y') }} {{ $siteTitle }}. {{ $siteSubtitle }}.</p>
-            <p style="font-size: 0.8rem; margin-top: 6px; opacity: 0.8;">
-                Designed and maintained by <a href="https://leenaitsolutions.in" target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent-color);">LITS</a>
-            </p>
             @php
                 $footerQuoteText = \App\Models\Setting::getVal('footer_quote_text', 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith...');
                 $footerQuoteAuthor = \App\Models\Setting::getVal('footer_quote_author', 'Colossians 2:6-7');
@@ -257,6 +254,9 @@
                     <a href="/login" style="margin: 0 10px; opacity: 0.8;">Login</a>
                 @endauth
             </nav>
+            <p style="font-size: 0.8rem; margin-top: 16px; opacity: 0.8;">
+                Designed and maintained by <a href="https://leenaitsolutions.in" target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent-color);">LITS</a>
+            </p>
         </div>
     </footer>
 

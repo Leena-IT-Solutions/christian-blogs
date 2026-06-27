@@ -6,7 +6,7 @@
     --text-muted: #717171;
     --border-color: #dedede;
     --accent-color: #bf9f5a;
-    --accent-hover: #caa316;
+    --accent-hover: #a2874c;
     --accent-light: rgba(191, 159, 90, 0.1);
     --card-bg: #ffffff;
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
@@ -32,9 +32,9 @@
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.5);
     --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
     --shadow-lg: 0 20px 40px rgba(0,0,0,0.6);
-    --accent-light: rgba(191, 159, 90, 0.15);
+    --accent-light: rgba(191, 159, 90, 0.1);
     --glass-bg: rgba(18, 18, 18, 0.85);
-    --glass-border: rgba(191, 159, 90, 0.3);
+    --glass-border: rgba(191, 159, 90, 0.2);
 }
 
 /* Reset & Base Styles */
