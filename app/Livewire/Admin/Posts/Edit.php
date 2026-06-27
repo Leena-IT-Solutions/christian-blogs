@@ -111,6 +111,6 @@ class Edit extends Component
 
         return view('livewire.admin.posts.edit', compact('categories', 'tags'))
             ->layout('components.layouts.admin')
-            ->title('Edit Post - Kernel Admin');
+            ->title('Edit Post - Admin');
     }
 }

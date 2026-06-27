@@ -25,6 +25,6 @@ class Dashboard extends Component
 
         return view('livewire.admin.dashboard', compact('stats'))
             ->layout('components.layouts.admin')
-            ->title('Dashboard - Kernel Admin');
+            ->title('Dashboard - Admin');
     }
 }

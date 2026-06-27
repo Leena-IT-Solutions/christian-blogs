@@ -38,6 +38,6 @@ class Messages extends Component
 
         return view('livewire.admin.messages', compact('messages', 'activeMessage'))
             ->layout('components.layouts.admin')
-            ->title('Messages Inbox - Kernel Admin');
+            ->title('Messages Inbox - Admin');
     }
 }

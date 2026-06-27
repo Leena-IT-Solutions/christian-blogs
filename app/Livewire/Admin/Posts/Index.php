@@ -59,6 +59,6 @@ class Index extends Component
 
         return view('livewire.admin.posts.index', compact('posts'))
             ->layout('components.layouts.admin')
-            ->title('Manage Posts - Kernel Admin');
+            ->title('Manage Posts - Admin');
     }
 }

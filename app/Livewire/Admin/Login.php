@@ -33,6 +33,6 @@ class Login extends Component
     {
         return view('livewire.admin.login')
             ->layout('components.layouts.app')
-            ->title('Admin Login - A Kernel for Christ');
+            ->title('Admin Login - ' . \App\Models\Setting::getVal('site_title', 'Be Rooted in Christ'));
     }
 }

@@ -123,6 +123,6 @@ class Settings extends Component
     {
         return view('livewire.admin.settings')
             ->layout('components.layouts.admin')
-            ->title('Settings - Kernel Admin');
+            ->title('Settings - Admin');
     }
 }

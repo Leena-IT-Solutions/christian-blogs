@@ -79,6 +79,6 @@ class Create extends Component
 
         return view('livewire.admin.posts.create', compact('categories', 'tags'))
             ->layout('components.layouts.admin')
-            ->title('Write Post - Kernel Admin');
+            ->title('Write Post - Admin');
     }
 }

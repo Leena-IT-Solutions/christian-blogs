@@ -38,6 +38,6 @@ class Comments extends Component
 
         return view('livewire.admin.comments', compact('comments'))
             ->layout('components.layouts.admin')
-            ->title('Moderate Comments - Kernel Admin');
+            ->title('Moderate Comments - Admin');
     }
 }

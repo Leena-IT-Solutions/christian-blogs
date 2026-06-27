@@ -104,6 +104,6 @@ class Categories extends Component
 
         return view('livewire.admin.categories', compact('categories'))
             ->layout('components.layouts.admin')
-            ->title('Manage Categories - Kernel Admin');
+            ->title('Manage Categories - Admin');
     }
 }
