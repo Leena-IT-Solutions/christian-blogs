@@ -26,7 +26,7 @@ class About extends Component
     {
         $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
         $biography   = $this->biography;
-        $description = \Str::limit(strip_tags($biography), 155);
+        $description = \Str::limit(strip_tags(\Illuminate\Support\Str::markdown($biography)), 155);
 
         $seoTitle = Setting::getVal('seo_about_title') ?: ('About the Author — ' . $siteTitle);
         $seoDesc = Setting::getVal('seo_about_description') ?: ('Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture and rooted in Jesus.');

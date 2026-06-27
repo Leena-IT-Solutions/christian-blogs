@@ -88,7 +88,7 @@
                     <img src="{{ asset($authorPhoto) }}" alt="Author" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; border: 2px solid var(--accent-color);">
                 @endif
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
-                    {{ Str::limit(strip_tags($authorBio), 120) }}
+                    {{ Str::limit(strip_tags(Str::markdown($authorBio)), 120) }}
                 </p>
                 <a href="/about" style="font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Read Full Biography &raquo;</a>
             </div>
