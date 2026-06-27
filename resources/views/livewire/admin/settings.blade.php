@@ -131,6 +131,22 @@
                     </div>
                 </div>
 
+                <div class="panel-card">
+                    <h2 class="panel-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">Footer Verse / Quote</h2>
+                    
+                    <div class="admin-form-group">
+                        <label class="admin-label">Verse / Quote Text</label>
+                        <textarea wire:model="footer_quote_text" class="admin-control" style="height: 80px; resize: vertical;" placeholder='e.g. "As ye have therefore received Christ Jesus the Lord, so walk ye in him..."'></textarea>
+                        @error('footer_quote_text') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group" style="margin-top: 20px;">
+                        <label class="admin-label">Verse / Quote Reference (Author)</label>
+                        <input type="text" wire:model="footer_quote_author" class="admin-control" placeholder="e.g. Colossians 2:6-7">
+                        @error('footer_quote_author') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
 
 
             <!-- Right Side: Social Media & Profile Photo -->

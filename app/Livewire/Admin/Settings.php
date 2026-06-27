@@ -32,6 +32,10 @@ class Settings extends Component
     public $hero_title = '';
     public $hero_subtitle = '';
 
+    // Footer Quote properties
+    public $footer_quote_text = '';
+    public $footer_quote_author = '';
+
     protected $rules = [
         'site_title' => 'required|string|max:255',
         'site_subtitle' => 'required|string|max:255',
@@ -47,6 +51,8 @@ class Settings extends Component
         'pinterest_link' => 'nullable|url',
         'hero_title' => 'required|string|max:255',
         'hero_subtitle' => 'required|string|max:500',
+        'footer_quote_text' => 'nullable|string|max:500',
+        'footer_quote_author' => 'nullable|string|max:255',
     ];
 
     public function mount()
@@ -67,6 +73,10 @@ class Settings extends Component
         // Load Homepage Hero keys
         $this->hero_title = Setting::getVal('hero_title', 'Planted to Prevail');
         $this->hero_subtitle = Setting::getVal('hero_subtitle', 'Sowing seeds of Truth, nurturing roots of faith, and bearing fruit for the glory of Christ.');
+
+        // Load Footer Quote keys
+        $this->footer_quote_text = Setting::getVal('footer_quote_text', 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith...');
+        $this->footer_quote_author = Setting::getVal('footer_quote_author', 'Colossians 2:6-7');
     }
 
     public function saveSettings()
@@ -87,6 +97,10 @@ class Settings extends Component
         // Save Homepage Hero keys
         Setting::updateOrCreate(['key' => 'hero_title'], ['value' => $this->hero_title]);
         Setting::updateOrCreate(['key' => 'hero_subtitle'], ['value' => $this->hero_subtitle]);
+
+        // Save Footer Quote keys
+        Setting::updateOrCreate(['key' => 'footer_quote_text'], ['value' => $this->footer_quote_text ?? '']);
+        Setting::updateOrCreate(['key' => 'footer_quote_author'], ['value' => $this->footer_quote_author ?? '']);
 
         // Save site logo if uploaded
         if ($this->site_logo) {
