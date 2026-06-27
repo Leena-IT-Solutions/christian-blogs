@@ -1,9 +1,10 @@
 <div>
-    <div class="admin-header">
+    <div class="admin-header" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
         <div class="admin-title">
             <h1>Site Settings</h1>
             <p>Configure site branding, social networks, and biographical content</p>
         </div>
+        <button type="submit" form="settings-form" class="btn" style="padding: 10px 24px;">Save Settings</button>
     </div>
 
     @if (session()->has('message'))
@@ -12,7 +13,7 @@
         </div>
     @endif
 
-    <form wire:submit.prevent="saveSettings">
+    <form id="settings-form" wire:submit.prevent="saveSettings">
         <div class="grid-2-1">
             
             <!-- Left Side: Site Identity & About Text -->
@@ -190,7 +191,7 @@
             </div>
 
             <!-- Right Side: Social Media & Profile Photo -->
-            <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 24px; position: sticky; top: 24px; height: fit-content;">
                 
                 <div class="panel-card">
                     <h3 class="panel-title" style="font-size: 1.15rem; margin-bottom: 16px; text-transform: uppercase; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">Profile Photo</h3>
