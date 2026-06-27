@@ -19,6 +19,9 @@ class Settings extends Component
     public $about_image; // uploaded image file
     public $existing_site_logo = '';
     public $site_logo; // uploaded logo file
+    public $existing_site_favicon = '';
+    public $site_favicon; // uploaded favicon file
+    public $use_logo_as_favicon = false; // toggle
     public $facebook_link = '';
     public $instagram_link = '';
 
@@ -28,6 +31,8 @@ class Settings extends Component
         'about_text' => 'required|string',
         'about_image' => 'nullable|image|max:2048', // 2MB Max
         'site_logo' => 'nullable|image|max:1024', // 1MB Max
+        'site_favicon' => 'nullable|image|max:512', // 512KB Max
+        'use_logo_as_favicon' => 'nullable|boolean',
         'facebook_link' => 'nullable|url',
         'instagram_link' => 'nullable|url',
     ];
@@ -39,6 +44,8 @@ class Settings extends Component
         $this->about_text = Setting::getVal('about_text', "Welcome to Be Rooted in Christ.\n\nThis blog is dedicated to sharing spiritual insights...");
         $this->existing_about_image = Setting::getVal('about_image');
         $this->existing_site_logo = Setting::getVal('site_logo');
+        $this->existing_site_favicon = Setting::getVal('site_favicon');
+        $this->use_logo_as_favicon = (bool) Setting::getVal('use_logo_as_favicon', '0');
         $this->facebook_link = Setting::getVal('facebook_link');
         $this->instagram_link = Setting::getVal('instagram_link');
     }
@@ -51,6 +58,7 @@ class Settings extends Component
         Setting::updateOrCreate(['key' => 'site_title'], ['value' => $this->site_title]);
         Setting::updateOrCreate(['key' => 'site_subtitle'], ['value' => $this->site_subtitle]);
         Setting::updateOrCreate(['key' => 'about_text'], ['value' => $this->about_text]);
+        Setting::updateOrCreate(['key' => 'use_logo_as_favicon'], ['value' => $this->use_logo_as_favicon ? '1' : '0']);
         Setting::updateOrCreate(['key' => 'facebook_link'], ['value' => $this->facebook_link]);
         Setting::updateOrCreate(['key' => 'instagram_link'], ['value' => $this->instagram_link]);
 
@@ -70,6 +78,24 @@ class Settings extends Component
             
             Setting::updateOrCreate(['key' => 'site_logo'], ['value' => $this->existing_site_logo]);
             $this->reset('site_logo');
+        }
+
+        // Save site favicon if uploaded
+        if ($this->site_favicon) {
+            // Delete old favicon if exists
+            if ($this->existing_site_favicon) {
+                $oldFaviconPath = public_path($this->existing_site_favicon);
+                if (file_exists($oldFaviconPath)) {
+                    @unlink($oldFaviconPath);
+                }
+            }
+
+            $filename = 'favicon_' . time() . '.' . $this->site_favicon->getClientOriginalExtension();
+            $path = $this->site_favicon->storeAs('uploads', $filename, 'public');
+            $this->existing_site_favicon = 'storage/' . $path;
+            
+            Setting::updateOrCreate(['key' => 'site_favicon'], ['value' => $this->existing_site_favicon]);
+            $this->reset('site_favicon');
         }
 
         // Save image if uploaded

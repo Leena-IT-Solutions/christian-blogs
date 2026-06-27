@@ -3,6 +3,17 @@
     $siteSubtitle = \App\Models\Setting::getVal('site_subtitle', 'Planted to Prevail & Produce');
     $siteLogoSetting = \App\Models\Setting::getVal('site_logo');
     $siteLogo = $siteLogoSetting ? asset($siteLogoSetting) : asset('images/logo.png');
+
+    $useLogoAsFavicon = (bool) \App\Models\Setting::getVal('use_logo_as_favicon', '0');
+    $siteFaviconSetting = \App\Models\Setting::getVal('site_favicon');
+    
+    if ($useLogoAsFavicon && $siteLogoSetting) {
+        $faviconUrl = asset($siteLogoSetting);
+    } elseif ($siteFaviconSetting) {
+        $faviconUrl = asset($siteFaviconSetting);
+    } else {
+        $faviconUrl = asset('favicon.png');
+    }
 @endphp
 @props([
     'title'                => null,
@@ -124,8 +135,8 @@
     {{-- ============================================================ --}}
     {{-- Favicons --}}
     {{-- ============================================================ --}}
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ $faviconUrl }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $faviconUrl }}">
 
     {{-- ============================================================ --}}
     {{-- Performance: Google Fonts --}}

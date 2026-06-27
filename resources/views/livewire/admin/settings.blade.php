@@ -61,6 +61,46 @@
                         <small style="color: var(--admin-text-muted); display: block; margin-top: 8px;">Recommended dimensions: 150x50 pixels. Transparent PNG or SVG is preferred for best visual rendering.</small>
                         @error('site_logo') <span class="invalid-feedback" style="display: block; margin-top: 8px;">{{ $message }}</span> @enderror
                     </div>
+
+                    <!-- Favicon Section -->
+                    <div class="admin-form-group" style="margin-top: 24px; border-top: 1px dashed var(--admin-border); padding-top: 20px;">
+                        <label class="admin-label" style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600;">
+                            <input type="checkbox" wire:model.live="use_logo_as_favicon" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent-color);">
+                            <span>Use Site Logo as Favicon</span>
+                        </label>
+                        <small style="color: var(--admin-text-muted); display: block; margin-top: 4px; margin-left: 28px;">If checked, your website logo will automatically be scaled down and used as the favicon.</small>
+                    </div>
+
+                    @if (!$use_logo_as_favicon)
+                        <div class="admin-form-group" style="margin-top: 20px; margin-left: 28px;">
+                            <label class="admin-label">Custom Site Favicon (Upload new favicon or leave blank to keep current)</label>
+                            <div style="display: flex; align-items: center; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+                                @if ($site_favicon)
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 0.75rem; color: #4ade80;">Previewing:</span>
+                                        <img src="{{ $site_favicon->temporaryUrl() }}" style="width: 32px; height: 32px; object-fit: contain; border: 1px solid var(--admin-border); padding: 2px; border-radius: var(--radius-sm); background-color: #000;" alt="Favicon Preview">
+                                    </div>
+                                @elseif ($existing_site_favicon)
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 0.75rem; color: var(--accent-color);">Current Favicon:</span>
+                                        <img src="{{ asset($existing_site_favicon) }}" style="width: 32px; height: 32px; object-fit: contain; border: 1px solid var(--admin-border); padding: 2px; border-radius: var(--radius-sm); background-color: #000;" alt="Current Favicon">
+                                    </div>
+                                @else
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Default Favicon:</span>
+                                        <img src="{{ asset('favicon.png') }}" style="width: 32px; height: 32px; object-fit: contain; border: 1px solid var(--admin-border); padding: 2px; border-radius: var(--radius-sm); background-color: #000;" alt="Default Favicon">
+                                    </div>
+                                @endif
+                                
+                                <div style="flex-grow: 1; min-width: 200px;">
+                                    <input type="file" wire:model="site_favicon" accept="image/*" class="admin-control" style="padding: 8px;">
+                                    <div wire:loading wire:target="site_favicon" style="font-size: 0.85rem; color: var(--accent-color); margin-top: 4px;">Uploading...</div>
+                                </div>
+                            </div>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 8px;">Recommended dimensions: 32x32 pixels. PNG or ICO format preferred.</small>
+                            @error('site_favicon') <span class="invalid-feedback" style="display: block; margin-top: 8px;">{{ $message }}</span> @enderror
+                        </div>
+                    @endif
                 </div>
 
                 <div class="panel-card">

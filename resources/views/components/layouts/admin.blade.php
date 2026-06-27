@@ -2,6 +2,17 @@
     $siteTitle = \App\Models\Setting::getVal('site_title', 'Be Rooted in Christ');
     $siteLogoSetting = \App\Models\Setting::getVal('site_logo');
     $siteLogo = $siteLogoSetting ? asset($siteLogoSetting) : asset('images/logo.png');
+
+    $useLogoAsFavicon = (bool) \App\Models\Setting::getVal('use_logo_as_favicon', '0');
+    $siteFaviconSetting = \App\Models\Setting::getVal('site_favicon');
+    
+    if ($useLogoAsFavicon && $siteLogoSetting) {
+        $faviconUrl = asset($siteLogoSetting);
+    } elseif ($siteFaviconSetting) {
+        $faviconUrl = asset($siteFaviconSetting);
+    } else {
+        $faviconUrl = asset('favicon.png');
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -11,8 +22,8 @@
     <title>{{ $title ?? 'Admin Dashboard - ' . $siteTitle }}</title>
     
     <!-- Favicons -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ $faviconUrl }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $faviconUrl }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
