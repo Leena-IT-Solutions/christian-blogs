@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Message;
 use App\Models\Setting;
+use App\Models\Category;
+use App\Models\Tag;
 use Livewire\Component;
 
 class Contact extends Component
@@ -52,6 +54,12 @@ class Contact extends Component
         $seoDesc = Setting::getVal('seo_contact_description') ?: ('Have a question, prayer request, or feedback? Get in touch with ' . $siteTitle . '.');
         $seoKeywords = Setting::getVal('seo_contact_keywords') ?: ('contact, prayer request, get in touch, ' . $siteTitle . ', Christian blog');
 
+        $categories = Category::withCount(['posts' => function($q) {
+            $q->where('status', 'published');
+        }])->get();
+
+        $tags = Tag::has('posts')->get();
+
         // --- JSON-LD: ContactPage ---
         $contactJsonLd = json_encode([
             '@context'    => 'https://schema.org',
@@ -78,7 +86,7 @@ class Contact extends Component
 
         $jsonLd = '<script type="application/ld+json">' . $contactJsonLd . '</script>';
 
-        return view('livewire.contact')
+        return view('livewire.contact', compact('categories', 'tags'))
             ->layout('components.layouts.app', [
                 'title'         => $seoTitle,
                 'description'   => $seoDesc,
