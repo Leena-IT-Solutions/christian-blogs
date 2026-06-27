@@ -1,58 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌿 Be Rooted in Christ
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> *"Abide in me, and I in you. As the branch cannot bear fruit of itself, except it abide in the vine; no more can ye, except ye abide in me."* — **John 15:4**
 
-## About Laravel
+**Be Rooted in Christ** is a premium, highly interactive Christian devotional blog and administration panel. Built with **Laravel 11.x**, **Livewire 3**, and a **MySQL** database, it features a custom **Vanilla CSS** design system crafted to match the warm, elegant, and literary aesthetic of [A Kernel for Christ](https://akernelforchrist.com).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📖 Public Devotional Blog
+* **Elegant Aesthetic:** Clean layout with centered branding, a navigation bar, and a theme selector (default dark mode / glassmorphism card styling).
+* **Interactive Post Reading:** View posts directly within a rich, fast, overlay/modal window (no page reloads) or navigate to dedicated post detail pages.
+* **Filter & Search:** Live, instant query search and sidebar filters for categories and tags.
+* **Modern Comment Section:** Interactive comment forms featuring native validation and direct integration with admin approval workflows.
+* **Accessible Contact Page:** Fully accessible contact forms supporting autofill attributes, ARIA accessibility markup, and custom validation.
+* **SEO Optimized:** Dynamic meta headers (title, description, keywords), canonical links, automated JSON-LD Schema.org graphs (Blog and Article), and an auto-generated `/sitemap.xml`.
 
-## Learning Laravel
+### 🛡️ Admin Management Panel
+* **Lightweight Authentication:** Custom, lightweight Livewire-driven admin authentication system.
+* **Dashboard Analytics:** High-level summary showing the total count of posts, categories, tags, pending comments, and unread contact messages.
+* **Markdown Post Editor:** Elegant post creation/modification workspace with an interactive side-by-side live markdown preview, featured image uploads, and real-time slug auto-generation.
+* **Taxonomy Management:** Live edit-in-place Category and Tag managers.
+* **Comment Moderation:** Queue-based moderation system to approve, reject, or delete visitor comments.
+* **Message Center:** View, read, and delete contact inquiries submitted from the frontend.
+* **Dynamic Content Manager:** Custom Settings panel to control site subtitles, social links, and about page text/images.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🎨 Visual Design System
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+The application utilizes a completely custom CSS layout instead of Tailwind CSS utility classes to achieve a premium, custom-crafted feel.
 
-## Agentic Development
+* **Color Palette:** Deep black backgrounds (`#000000`) and charcoal borders for a high-contrast dark theme, accented with a warm gold/mustard highlight (`#bf9f5a`).
+* **Typography:** Elegant `'Lora', serif` headings for a literary feel combined with highly readable `'Open Sans', sans-serif` for body copy.
+* **Micro-interactions:** Smooth CSS transitions for button states, image scales, hover animations, and scale-in modals.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
+
+## 🛠️ Technology Stack
+
+* **Backend:** Laravel 11.x (PHP 8.3+)
+* **Frontend:** Livewire 3 (Reactive components) & Custom Vanilla CSS
+* **Database:** MySQL
+* **Assets:** Vite (with CSS compilation)
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up the project locally.
+
+### Prerequisites
+
+Ensure you have the following installed:
+* PHP 8.3 or higher
+* Composer
+* Node.js (v18+) & NPM
+* MySQL Database
+
+### ⚡ One-Step Initialization
+
+For convenience, a custom setup script is configured in `composer.json`. Simply run the following command in the project root:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer run setup
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+This script will automatically:
+1. Install PHP dependencies (`composer install`)
+2. Create your `.env` file from the example if it doesn't exist
+3. Generate the application encryption key
+4. Run migrations and database seeding
+5. Install Node packages and compile production assets
 
-## Contributing
+> [!NOTE]
+> Ensure you have configured your database credentials in your `.env` file before running migrations. Read below for manual configuration steps.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 🔧 Manual Setup
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+If you prefer to set up the project step-by-step:
 
-## Security Vulnerabilities
+#### 1. Clone & Install Dependencies
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# Clone the repository
+git clone https://github.com/Leena-IT-Solutions/christian-blogs.git
+cd christian-blogs
 
-## License
+# Install PHP dependencies
+composer install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Install JavaScript dependencies
+npm install
+```
+
+#### 2. Configure Environment
+
+Copy the `.env.example` file and configure your database settings:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and set your MySQL connection details:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=berootedinchrist.com
+DB_USERNAME=root
+DB_PASSWORD=YourPassword Here
+```
+
+Generate the app key:
+
+```bash
+php artisan key:generate
+```
+
+#### 3. Database Migration & Seeding
+
+Run the migrations and seed the database to populate tags, categories, sample settings, a default blog post, and the admin user:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+#### 4. Compile Assets
+
+```bash
+# Run dev server
+npm run dev
+
+# Or build for production
+npm run build
+```
+
+---
+
+## 🏃 Running the Application
+
+To run the entire development environment concurrently (Laravel Server, Vite asset compilation, Queue listener, and Pail logs):
+
+```bash
+composer run dev
+```
+
+Alternatively, you can run the individual servers manually:
+
+```bash
+# Start Laravel development server
+php artisan serve
+
+# Start Vite asset compilation
+npm run dev
+```
+
+Open `http://localhost:8000` in your browser.
+
+---
+
+## 🔑 Seeding & Admin Credentials
+
+The default database seeder populates the initial administrator credentials:
+
+* **Login URL:** `/login`
+* **Email:** `admin@berootedinchrist.com`
+* **Password:** `password`
+
+*You should update these credentials in the Settings panel immediately after your first login.*
+
+---
+
+## 📂 Project Structure
+
+Key paths of interest for development:
+
+* **Livewire Components:**
+  * Public Views: [app/Livewire](file:///Users/sandeep/Projects/sheeba/app/Livewire)
+  * Admin Views: [app/Livewire/Admin](file:///Users/sandeep/Projects/sheeba/app/Livewire/Admin)
+* **Custom Styling:**
+  * Public Stylesheet: [public/css/app.css](file:///Users/sandeep/Projects/sheeba/public/css/app.css)
+  * Admin Stylesheet: [public/css/admin.css](file:///Users/sandeep/Projects/sheeba/public/css/admin.css)
+* **Database & Seeds:**
+  * Migrations: [database/migrations](file:///Users/sandeep/Projects/sheeba/database/migrations)
+  * Default Seed: [database/seeders/DatabaseSeeder.php](file:///Users/sandeep/Projects/sheeba/database/seeders/DatabaseSeeder.php)
+* **Routes:**
+  * Web Routes: [routes/web.php](file:///Users/sandeep/Projects/sheeba/routes/web.php)
