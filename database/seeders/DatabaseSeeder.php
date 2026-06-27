@@ -52,6 +52,10 @@ class DatabaseSeeder extends Seeder
 
         // 4. Create Settings
         \App\Models\Setting::create([
+            'key' => 'site_title',
+            'value' => 'Be Rooted in Christ'
+        ]);
+        \App\Models\Setting::create([
             'key' => 'site_subtitle',
             'value' => 'Planted to Prevail & Produce'
         ]);
@@ -68,12 +72,56 @@ This blog is dedicated to sharing spiritual insights, deep scripture studies, an
             'value' => ''
         ]);
         \App\Models\Setting::create([
+            'key' => 'site_logo',
+            'value' => ''
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'site_favicon',
+            'value' => ''
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'use_logo_as_favicon',
+            'value' => '0'
+        ]);
+        \App\Models\Setting::create([
             'key' => 'facebook_link',
             'value' => 'https://facebook.com'
         ]);
         \App\Models\Setting::create([
             'key' => 'instagram_link',
             'value' => 'https://instagram.com'
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'twitter_link',
+            'value' => ''
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'youtube_link',
+            'value' => ''
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'pinterest_link',
+            'value' => ''
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'hero_title',
+            'value' => 'Planted to Prevail'
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'hero_subtitle',
+            'value' => 'Sowing seeds of Truth, nurturing roots of faith, and bearing fruit for the glory of Christ.'
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'theme_color',
+            'value' => '#bf9f5a'
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'footer_quote_text',
+            'value' => 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith...'
+        ]);
+        \App\Models\Setting::create([
+            'key' => 'footer_quote_author',
+            'value' => 'Colossians 2:6-7'
         ]);
 
         // 5. Create Posts
