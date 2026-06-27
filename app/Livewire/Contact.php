@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Message;
+use App\Models\Setting;
 use Livewire\Component;
 
 class Contact extends Component
@@ -45,20 +46,22 @@ class Contact extends Component
 
     public function render()
     {
+        $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
+
         // --- JSON-LD: ContactPage ---
         $contactJsonLd = json_encode([
             '@context'    => 'https://schema.org',
             '@type'       => 'ContactPage',
             '@id'         => url('/contact'),
-            'name'        => 'Contact — Be Rooted in Christ',
+            'name'        => 'Contact — ' . $siteTitle,
             'url'         => url('/contact'),
-            'description' => 'Send a message, share a prayer request, or get in touch with Be Rooted in Christ.',
-            'isPartOf'    => ['@type' => 'WebSite', '@id' => 'https://berootedinchrist.com/#website'],
+            'description' => 'Send a message, share a prayer request, or get in touch with ' . $siteTitle . '.',
+            'isPartOf'    => ['@type' => 'WebSite', '@id' => url('/') . '/#website'],
             'mainEntity'  => [
                 '@type'        => 'Organization',
-                '@id'          => 'https://berootedinchrist.com/#organization',
-                'name'         => 'Be Rooted in Christ',
-                'url'          => 'https://berootedinchrist.com',
+                '@id'          => url('/') . '/#organization',
+                'name'         => $siteTitle,
+                'url'          => url('/'),
                 'email'        => 'leenaitsolutions@gmail.com',
                 'contactPoint' => [
                     '@type'             => 'ContactPoint',
@@ -73,13 +76,13 @@ class Contact extends Component
 
         return view('livewire.contact')
             ->layout('components.layouts.app', [
-                'title'         => 'Contact — Be Rooted in Christ',
-                'description'   => 'Have a question, prayer request, or feedback? Get in touch with Be Rooted in Christ.',
-                'keywords'      => 'contact, prayer request, get in touch, Be Rooted in Christ, Christian blog',
+                'title'         => 'Contact — ' . $siteTitle,
+                'description'   => 'Have a question, prayer request, or feedback? Get in touch with ' . $siteTitle . '.',
+                'keywords'      => 'contact, prayer request, get in touch, ' . $siteTitle . ', Christian blog',
                 'canonical'     => url('/contact'),
                 'ogType'        => 'website',
-                'ogTitle'       => 'Contact — Be Rooted in Christ',
-                'ogDescription' => 'Send a message, share a prayer request, or get in touch with Be Rooted in Christ.',
+                'ogTitle'       => 'Contact — ' . $siteTitle,
+                'ogDescription' => 'Send a message, share a prayer request, or get in touch with ' . $siteTitle . '.',
                 'robots'        => 'noindex, follow',
                 'twitterCard'   => 'summary',
                 'jsonLd'        => $jsonLd,

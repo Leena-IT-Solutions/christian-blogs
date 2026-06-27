@@ -22,6 +22,7 @@ class About extends Component
 
     public function render()
     {
+        $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
         $biography   = $this->biography;
         $description = \Str::limit(strip_tags($biography), 155);
 
@@ -30,16 +31,16 @@ class About extends Component
             '@context'    => 'https://schema.org',
             '@type'       => 'AboutPage',
             '@id'         => url('/about'),
-            'name'        => 'About the Author — Be Rooted in Christ',
+            'name'        => 'About the Author — ' . $siteTitle,
             'url'         => url('/about'),
-            'description' => 'Learn about the author behind Be Rooted in Christ, a devotional blog sharing faith-building articles grounded in Scripture.',
-            'isPartOf'    => ['@type' => 'WebSite', '@id' => 'https://berootedinchrist.com/#website'],
+            'description' => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture.',
+            'isPartOf'    => ['@type' => 'WebSite', '@id' => url('/') . '/#website'],
             'mainEntity'  => [
                 '@type'       => 'Person',
-                'name'        => 'Be Rooted in Christ Author',
+                'name'        => $siteTitle . ' Author',
                 'url'         => url('/about'),
                 'description' => $description,
-                'worksFor'    => ['@type' => 'Organization', 'name' => 'Be Rooted in Christ', 'url' => 'https://berootedinchrist.com'],
+                'worksFor'    => ['@type' => 'Organization', 'name' => $siteTitle, 'url' => url('/')],
             ],
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
@@ -47,13 +48,13 @@ class About extends Component
 
         return view('livewire.about')
             ->layout('components.layouts.app', [
-                'title'         => 'About the Author — Be Rooted in Christ',
-                'description'   => 'Learn about the author behind Be Rooted in Christ, a devotional blog sharing faith-building articles grounded in Scripture and rooted in Jesus.',
-                'keywords'      => 'about, Christian author, devotional blogger, Be Rooted in Christ, faith, scripture',
+                'title'         => 'About the Author — ' . $siteTitle,
+                'description'   => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture and rooted in Jesus.',
+                'keywords'      => 'about, Christian author, devotional blogger, ' . $siteTitle . ', faith, scripture',
                 'canonical'     => url('/about'),
                 'ogType'        => 'profile',
-                'ogTitle'       => 'About the Author — Be Rooted in Christ',
-                'ogDescription' => 'Learn about the author behind Be Rooted in Christ, a devotional blog sharing faith-building articles grounded in Scripture.',
+                'ogTitle'       => 'About the Author — ' . $siteTitle,
+                'ogDescription' => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture.',
                 'jsonLd'        => $jsonLd,
             ]);
     }

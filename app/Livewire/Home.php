@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -94,19 +95,22 @@ class Home extends Component
         // Selected post for modal
         $activePost = $this->activePostId ? Post::with(['category', 'tags', 'approvedComments'])->find($this->activePostId) : null;
 
+        $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
+        $siteSubtitle = Setting::getVal('site_subtitle', 'Planted to Prevail & Produce');
+
         // --- JSON-LD: Blog ---
         $blogJsonLd = json_encode([
             '@context'    => 'https://schema.org',
             '@type'       => 'Blog',
-            '@id'         => 'https://berootedinchrist.com/#blog',
-            'name'        => 'Be Rooted in Christ Blog',
+            '@id'         => url('/') . '/#blog',
+            'name'        => $siteTitle . ' Blog',
             'url'         => url('/'),
             'description' => 'A devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.',
             'inLanguage'  => 'en-IN',
             'publisher'   => [
                 '@type' => 'Organization',
-                '@id'   => 'https://berootedinchrist.com/#organization',
-                'name'  => 'Be Rooted in Christ',
+                '@id'   => url('/') . '/#organization',
+                'name'  => $siteTitle,
             ],
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
@@ -114,13 +118,13 @@ class Home extends Component
 
         return view('livewire.home', compact('posts', 'categories', 'tags', 'activePost'))
             ->layout('components.layouts.app', [
-                'title'          => 'Be Rooted in Christ — Devotional Blog | Planted to Prevail & Produce',
-                'description'    => 'Be Rooted in Christ is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
+                'title'          => $siteTitle . ' — Devotional Blog | ' . $siteSubtitle,
+                'description'    => $siteTitle . ' is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
                 'keywords'       => 'Christian devotional blog, Bible study, spiritual growth, faith, rooted in Christ, prayer, scripture, Jesus, devotional articles',
                 'canonical'      => url('/'),
                 'ogType'         => 'website',
-                'ogTitle'        => 'Be Rooted in Christ — Devotional Blog | Planted to Prevail & Produce',
-                'ogDescription'  => 'Be Rooted in Christ is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
+                'ogTitle'        => $siteTitle . ' — Devotional Blog | ' . $siteSubtitle,
+                'ogDescription'  => $siteTitle . ' is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
                 'jsonLd'         => $jsonLd,
             ]);
     }

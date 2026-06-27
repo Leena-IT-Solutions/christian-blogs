@@ -22,9 +22,44 @@
                     <h2 class="panel-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">Identity & Title</h2>
                     
                     <div class="admin-form-group">
+                        <label class="admin-label">Site Title</label>
+                        <input type="text" wire:model="site_title" class="admin-control" placeholder="e.g. Be Rooted in Christ" required>
+                        @error('site_title') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group" style="margin-top: 20px;">
                         <label class="admin-label">Site Tagline / Subtitle</label>
                         <input type="text" wire:model="site_subtitle" class="admin-control" placeholder="e.g. Planted to Prevail & Produce" required>
                         @error('site_subtitle') <span class="invalid-feedback">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="admin-form-group" style="margin-top: 20px;">
+                        <label class="admin-label">Site Logo (Upload new logo or leave blank to keep current)</label>
+                        <div style="display: flex; align-items: center; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+                            @if ($site_logo)
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: #4ade80;">Previewing Uploaded:</span>
+                                    <img src="{{ $site_logo->temporaryUrl() }}" style="max-height: 50px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm); background-color: #000;" alt="Logo Preview">
+                                </div>
+                            @elseif ($existing_site_logo)
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: var(--accent-color);">Current Logo:</span>
+                                    <img src="{{ asset($existing_site_logo) }}" style="max-height: 50px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm); background-color: #000;" alt="Current Logo">
+                                </div>
+                            @else
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: var(--admin-text-muted);">Default Logo:</span>
+                                    <img src="{{ asset('images/logo.png') }}" style="max-height: 50px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm); opacity: 0.7; background-color: #000;" alt="Default Logo">
+                                </div>
+                            @endif
+                            
+                            <div style="flex-grow: 1; min-width: 200px;">
+                                <input type="file" wire:model="site_logo" accept="image/*" class="admin-control" style="padding: 8px;">
+                                <div wire:loading wire:target="site_logo" style="font-size: 0.85rem; color: var(--accent-color); margin-top: 4px;">Uploading...</div>
+                            </div>
+                        </div>
+                        <small style="color: var(--admin-text-muted); display: block; margin-top: 8px;">Recommended dimensions: 150x50 pixels. Transparent PNG or SVG is preferred for best visual rendering.</small>
+                        @error('site_logo') <span class="invalid-feedback" style="display: block; margin-top: 8px;">{{ $message }}</span> @enderror
                     </div>
                 </div>
 

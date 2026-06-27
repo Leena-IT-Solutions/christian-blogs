@@ -12,28 +12,35 @@ class Settings extends Component
     use WithFileUploads;
 
     // Setting keys mapping
+    public $site_title = '';
     public $site_subtitle = '';
     public $about_text = '';
     public $existing_about_image = '';
     public $about_image; // uploaded image file
+    public $existing_site_logo = '';
+    public $site_logo; // uploaded logo file
     public $facebook_link = '';
     public $instagram_link = '';
 
     protected $rules = [
+        'site_title' => 'required|string|max:255',
         'site_subtitle' => 'required|string|max:255',
         'about_text' => 'required|string',
         'about_image' => 'nullable|image|max:2048', // 2MB Max
+        'site_logo' => 'nullable|image|max:1024', // 1MB Max
         'facebook_link' => 'nullable|url',
         'instagram_link' => 'nullable|url',
     ];
 
     public function mount()
     {
-        $this->site_subtitle = Setting::where('key', 'site_subtitle')->value('value') ?? 'Planted to Prevail & Produce';
-        $this->about_text = Setting::where('key', 'about_text')->value('value') ?? 'Welcome to my blog. I write about spiritual growth, faith, and producing fruit in Christ.';
-        $this->existing_about_image = Setting::where('key', 'about_image')->value('value') ?? '';
-        $this->facebook_link = Setting::where('key', 'facebook_link')->value('value') ?? '';
-        $this->instagram_link = Setting::where('key', 'instagram_link')->value('value') ?? '';
+        $this->site_title = Setting::getVal('site_title', 'Be Rooted in Christ');
+        $this->site_subtitle = Setting::getVal('site_subtitle', 'Planted to Prevail & Produce');
+        $this->about_text = Setting::getVal('about_text', "Welcome to Be Rooted in Christ.\n\nThis blog is dedicated to sharing spiritual insights...");
+        $this->existing_about_image = Setting::getVal('about_image');
+        $this->existing_site_logo = Setting::getVal('site_logo');
+        $this->facebook_link = Setting::getVal('facebook_link');
+        $this->instagram_link = Setting::getVal('instagram_link');
     }
 
     public function saveSettings()
@@ -41,10 +48,29 @@ class Settings extends Component
         $this->validate();
 
         // Save normal setting keys
+        Setting::updateOrCreate(['key' => 'site_title'], ['value' => $this->site_title]);
         Setting::updateOrCreate(['key' => 'site_subtitle'], ['value' => $this->site_subtitle]);
         Setting::updateOrCreate(['key' => 'about_text'], ['value' => $this->about_text]);
         Setting::updateOrCreate(['key' => 'facebook_link'], ['value' => $this->facebook_link]);
         Setting::updateOrCreate(['key' => 'instagram_link'], ['value' => $this->instagram_link]);
+
+        // Save site logo if uploaded
+        if ($this->site_logo) {
+            // Delete old logo if exists
+            if ($this->existing_site_logo) {
+                $oldLogoPath = public_path($this->existing_site_logo);
+                if (file_exists($oldLogoPath)) {
+                    @unlink($oldLogoPath);
+                }
+            }
+
+            $filename = 'logo_' . time() . '.' . $this->site_logo->getClientOriginalExtension();
+            $path = $this->site_logo->storeAs('uploads', $filename, 'public');
+            $this->existing_site_logo = 'storage/' . $path;
+            
+            Setting::updateOrCreate(['key' => 'site_logo'], ['value' => $this->existing_site_logo]);
+            $this->reset('site_logo');
+        }
 
         // Save image if uploaded
         if ($this->about_image) {

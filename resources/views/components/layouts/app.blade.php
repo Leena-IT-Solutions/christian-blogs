@@ -1,7 +1,13 @@
+@php
+    $siteTitle = \App\Models\Setting::getVal('site_title', 'Be Rooted in Christ');
+    $siteSubtitle = \App\Models\Setting::getVal('site_subtitle', 'Planted to Prevail & Produce');
+    $siteLogoSetting = \App\Models\Setting::getVal('site_logo');
+    $siteLogo = $siteLogoSetting ? asset($siteLogoSetting) : asset('images/logo.png');
+@endphp
 @props([
-    'title'                => 'Be Rooted in Christ',
-    'description'          => 'Be Rooted in Christ — a devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.',
-    'keywords'             => 'Christian blog, devotional, Bible study, faith, spiritual growth, Jesus Christ, rooted in Christ, prayer, scripture',
+    'title'                => null,
+    'description'          => null,
+    'keywords'             => null,
     'robots'               => 'index, follow',
     'canonical'            => null,
     'ogType'               => 'website',
@@ -15,6 +21,11 @@
     'twitterCard'          => 'summary_large_image',
     'jsonLd'               => null,
 ])
+@php
+    $resolvedTitle = $title ?? $siteTitle;
+    $resolvedDescription = $description ?? ($siteTitle . ' — a devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.');
+    $resolvedKeywords = $keywords ?? ('Christian blog, devotional, Bible study, faith, spiritual growth, Jesus Christ, rooted in Christ, prayer, scripture');
+@endphp
 <!DOCTYPE html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
@@ -24,10 +35,10 @@
     {{-- ============================================================ --}}
     {{-- SEO: Core Meta Tags --}}
     {{-- ============================================================ --}}
-    <title>{{ $title ?? 'Be Rooted in Christ' }}</title>
-    <meta name="description" content="{{ $description ?? 'Be Rooted in Christ — a devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.' }}">
-    <meta name="keywords" content="{{ $keywords ?? 'Christian blog, devotional, Bible study, faith, spiritual growth, Jesus Christ, rooted in Christ, prayer, scripture' }}">
-    <meta name="author" content="Be Rooted in Christ">
+    <title>{{ $resolvedTitle }}</title>
+    <meta name="description" content="{{ $resolvedDescription }}">
+    <meta name="keywords" content="{{ $resolvedKeywords }}">
+    <meta name="author" content="{{ $siteTitle }}">
     <meta name="robots" content="{{ $robots ?? 'index, follow' }}">
     <meta name="theme-color" content="#8B5E3C">
 
@@ -40,14 +51,14 @@
     {{-- SEO: Open Graph --}}
     {{-- ============================================================ --}}
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
-    <meta property="og:site_name" content="Be Rooted in Christ">
-    <meta property="og:title" content="{{ $ogTitle ?? ($title ?? 'Be Rooted in Christ') }}">
-    <meta property="og:description" content="{{ $ogDescription ?? ($description ?? 'Be Rooted in Christ — a devotional blog anchored in Scripture.') }}">
+    <meta property="og:site_name" content="{{ $siteTitle }}">
+    <meta property="og:title" content="{{ $ogTitle ?? $resolvedTitle }}">
+    <meta property="og:description" content="{{ $ogDescription ?? $resolvedDescription }}">
     <meta property="og:url" content="{{ $canonical ?? url()->current() }}">
     <meta property="og:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ $ogTitle ?? ($title ?? 'Be Rooted in Christ') }}">
+    <meta property="og:image:alt" content="{{ $ogTitle ?? $resolvedTitle }}">
     <meta property="og:locale" content="en_IN">
 
     {{-- Article-specific OG tags (only for posts) --}}
@@ -70,37 +81,40 @@
     {{-- SEO: Twitter / X Cards --}}
     {{-- ============================================================ --}}
     <meta name="twitter:card" content="{{ $twitterCard ?? 'summary_large_image' }}">
-    <meta name="twitter:title" content="{{ $ogTitle ?? ($title ?? 'Be Rooted in Christ') }}">
-    <meta name="twitter:description" content="{{ $ogDescription ?? ($description ?? 'Be Rooted in Christ — a devotional blog anchored in Scripture.') }}">
+    <meta name="twitter:title" content="{{ $ogTitle ?? $resolvedTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription ?? $resolvedDescription }}">
     <meta name="twitter:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
-    <meta name="twitter:image:alt" content="{{ $ogTitle ?? ($title ?? 'Be Rooted in Christ') }}">
+    <meta name="twitter:image:alt" content="{{ $ogTitle ?? $resolvedTitle }}">
 
-    @verbatim
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "@id": "https://berootedinchrist.com/#website",
-        "name": "Be Rooted in Christ",
-        "alternateName": "Be Rooted in Christ Blog",
-        "url": "https://berootedinchrist.com",
-        "description": "A devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.",
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
+        "@@id": "{{ url('/') }}/#website",
+        "name": "{{ $siteTitle }}",
+        "alternateName": "{{ $siteTitle }} Blog",
+        "url": "{{ url('/') }}",
+        "description": "{{ $resolvedDescription }}",
         "inLanguage": "en-IN",
         "potentialAction": {
-            "@type": "SearchAction",
-            "target": { "@type": "EntryPoint", "urlTemplate": "https://berootedinchrist.com/?search={search_term_string}" },
+            "@@type": "SearchAction",
+            "target": { "@@type": "EntryPoint", "urlTemplate": "{{ url('/') }}/?search={search_term_string}" },
             "query-input": "required name=search_term_string"
         },
         "publisher": {
-            "@type": "Organization",
-            "@id": "https://berootedinchrist.com/#organization",
-            "name": "Be Rooted in Christ",
-            "url": "https://berootedinchrist.com",
-            "logo": { "@type": "ImageObject", "url": "https://berootedinchrist.com/images/og-default.jpg", "width": 1200, "height": 630 }
+            "@@type": "Organization",
+            "@@id": "{{ url('/') }}/#organization",
+            "name": "{{ $siteTitle }}",
+            "url": "{{ url('/') }}",
+            "logo": { 
+                "@@type": "ImageObject", 
+                "url": "{{ $siteLogo }}", 
+                "width": 150, 
+                "height": 50 
+            }
         }
     }
     </script>
-    @endverbatim
 
     {{-- Per-page JSON-LD (BlogPosting, Blog, AboutPage, ContactPage, etc.) --}}
     @isset($jsonLd)
@@ -137,10 +151,10 @@
     <header>
         <div class="container header-inner">
             <a href="/" class="brand-wrapper">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="site-logo">
+                <img src="{{ $siteLogo }}" alt="Logo" class="site-logo">
                 <div class="site-title-group">
-                    <span class="site-title">Be Rooted in Christ</span>
-                    <span class="site-subtitle">Planted to Prevail &amp; Produce</span>
+                    <span class="site-title">{{ $siteTitle }}</span>
+                    <span class="site-subtitle">{{ $siteSubtitle }}</span>
                 </div>
             </a>
 
@@ -171,7 +185,7 @@
     <!-- Site Footer -->
     <footer>
         <div class="container">
-            <p>&copy; {{ date('Y') }} Be Rooted in Christ. Planted to Prevail &amp; Produce.</p>
+            <p>&copy; {{ date('Y') }} {{ $siteTitle }}. {{ $siteSubtitle }}.</p>
             <p style="font-size: 0.8rem; margin-top: 6px; opacity: 0.8;">
                 Designed and maintained by <a href="https://leenaitsolutions.in" target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent-color);">LITS</a>
             </p>

@@ -1,9 +1,14 @@
+@php
+    $siteTitle = \App\Models\Setting::getVal('site_title', 'Be Rooted in Christ');
+    $siteLogoSetting = \App\Models\Setting::getVal('site_logo');
+    $siteLogo = $siteLogoSetting ? asset($siteLogoSetting) : asset('images/logo.png');
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Admin Dashboard - Be Rooted in Christ' }}</title>
+    <title>{{ $title ?? 'Admin Dashboard - ' . $siteTitle }}</title>
     
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -31,7 +36,7 @@
             </button>
             
             <div class="admin-mobile-logo" style="display: flex; align-items: center; gap: 8px;">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 32px; width: auto;">
+                <img src="{{ $siteLogo }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain;">
                 <span style="font-family: var(--font-heading); font-weight: 700; color: #ffffff; font-size: 1.1rem; letter-spacing: 0.5px;">Rooted Admin</span>
             </div>
             
@@ -57,7 +62,7 @@
             </button>
 
             <div class="admin-logo" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 50px; width: auto;">
+                <img src="{{ $siteLogo }}" alt="Logo" style="max-height: 50px; max-width: 100%; width: auto; object-fit: contain;">
                 <div style="font-size: 1.2rem; font-weight: 700; margin-top: 4px;">Rooted<span>Admin</span></div>
             </div>
             

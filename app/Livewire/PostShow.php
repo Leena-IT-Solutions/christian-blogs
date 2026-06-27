@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Setting;
 use Livewire\Component;
 
 class PostShow extends Component
@@ -48,6 +49,7 @@ class PostShow extends Component
     public function render()
     {
         $post = $this->post;
+        $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
 
         // --- SEO Data ---
         $excerpt      = $post->excerpt ?? \Str::limit(strip_tags($post->body), 155);
@@ -57,8 +59,8 @@ class PostShow extends Component
         $updatedAt    = $post->updated_at;
         $category     = $post->category->name ?? 'Devotional';
         $tagNames     = $post->tags->pluck('name')->toArray();
-        $authorName   = $post->user->name ?? 'Be Rooted in Christ';
-        $keywords     = implode(', ', array_merge(['Be Rooted in Christ', 'Christian blog', $category], $tagNames));
+        $authorName   = $post->user->name ?? $siteTitle;
+        $keywords     = implode(', ', array_merge([$siteTitle, 'Christian blog', $category], $tagNames));
 
         // --- JSON-LD: BlogPosting + BreadcrumbList ---
         $blogPosting = json_encode([
@@ -75,15 +77,15 @@ class PostShow extends Component
             'author'           => ['@type' => 'Person', 'name' => $authorName, 'url' => url('/about')],
             'publisher'        => [
                 '@type' => 'Organization',
-                '@id'   => 'https://berootedinchrist.com/#organization',
-                'name'  => 'Be Rooted in Christ',
-                'url'   => 'https://berootedinchrist.com',
+                '@id'   => url('/') . '/#organization',
+                'name'  => $siteTitle,
+                'url'   => url('/'),
                 'logo'  => ['@type' => 'ImageObject', 'url' => asset('images/og-default.jpg'), 'width' => 1200, 'height' => 630],
             ],
             'articleSection'   => $category,
             'keywords'         => $keywords,
             'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $canonical],
-            'isPartOf'         => ['@type' => 'Blog', '@id' => 'https://berootedinchrist.com/#blog', 'name' => 'Be Rooted in Christ Blog', 'url' => url('/')],
+            'isPartOf'         => ['@type' => 'Blog', '@id' => url('/') . '/#blog', 'name' => $siteTitle . ' Blog', 'url' => url('/')],
             'commentCount'     => $post->approvedComments->count(),
         ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
@@ -102,12 +104,12 @@ class PostShow extends Component
 
         return view('livewire.post-show')
             ->layout('components.layouts.app', [
-                'title'                => $post->title . ' — Be Rooted in Christ',
+                'title'                => $post->title . ' — ' . $siteTitle,
                 'description'          => $excerpt,
                 'keywords'             => $keywords,
                 'canonical'            => $canonical,
                 'ogType'               => 'article',
-                'ogTitle'              => $post->title . ' — Be Rooted in Christ',
+                'ogTitle'              => $post->title . ' — ' . $siteTitle,
                 'ogDescription'        => $excerpt,
                 'ogImage'              => $ogImage,
                 'articlePublishedTime' => $publishedAt->toIso8601String(),
