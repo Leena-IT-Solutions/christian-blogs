@@ -48,14 +48,18 @@ class Contact extends Component
     {
         $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
 
+        $seoTitle = Setting::getVal('seo_contact_title') ?: ('Contact — ' . $siteTitle);
+        $seoDesc = Setting::getVal('seo_contact_description') ?: ('Have a question, prayer request, or feedback? Get in touch with ' . $siteTitle . '.');
+        $seoKeywords = Setting::getVal('seo_contact_keywords') ?: ('contact, prayer request, get in touch, ' . $siteTitle . ', Christian blog');
+
         // --- JSON-LD: ContactPage ---
         $contactJsonLd = json_encode([
             '@context'    => 'https://schema.org',
             '@type'       => 'ContactPage',
             '@id'         => url('/contact'),
-            'name'        => 'Contact — ' . $siteTitle,
+            'name'        => $seoTitle,
             'url'         => url('/contact'),
-            'description' => 'Send a message, share a prayer request, or get in touch with ' . $siteTitle . '.',
+            'description' => $seoDesc,
             'isPartOf'    => ['@type' => 'WebSite', '@id' => url('/') . '/#website'],
             'mainEntity'  => [
                 '@type'        => 'Organization',
@@ -76,13 +80,13 @@ class Contact extends Component
 
         return view('livewire.contact')
             ->layout('components.layouts.app', [
-                'title'         => 'Contact — ' . $siteTitle,
-                'description'   => 'Have a question, prayer request, or feedback? Get in touch with ' . $siteTitle . '.',
-                'keywords'      => 'contact, prayer request, get in touch, ' . $siteTitle . ', Christian blog',
+                'title'         => $seoTitle,
+                'description'   => $seoDesc,
+                'keywords'      => $seoKeywords,
                 'canonical'     => url('/contact'),
                 'ogType'        => 'website',
-                'ogTitle'       => 'Contact — ' . $siteTitle,
-                'ogDescription' => 'Send a message, share a prayer request, or get in touch with ' . $siteTitle . '.',
+                'ogTitle'       => $seoTitle,
+                'ogDescription' => $seoDesc,
                 'robots'        => 'noindex, follow',
                 'twitterCard'   => 'summary',
                 'jsonLd'        => $jsonLd,

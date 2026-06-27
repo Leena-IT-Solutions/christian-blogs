@@ -98,6 +98,10 @@ class Home extends Component
         $siteTitle = Setting::getVal('site_title', 'Be Rooted in Christ');
         $siteSubtitle = Setting::getVal('site_subtitle', 'Planted to Prevail & Produce');
 
+        $seoTitle = Setting::getVal('seo_home_title') ?: ($siteTitle . ' — Devotional Blog | ' . $siteSubtitle);
+        $seoDesc = Setting::getVal('seo_home_description') ?: ($siteTitle . ' is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.');
+        $seoKeywords = Setting::getVal('seo_home_keywords') ?: 'Christian devotional blog, Bible study, spiritual growth, faith, rooted in Christ, prayer, scripture, Jesus, devotional articles';
+
         // --- JSON-LD: Blog ---
         $blogJsonLd = json_encode([
             '@context'    => 'https://schema.org',
@@ -105,7 +109,7 @@ class Home extends Component
             '@id'         => url('/') . '/#blog',
             'name'        => $siteTitle . ' Blog',
             'url'         => url('/'),
-            'description' => 'A devotional blog anchored in Scripture. Explore faith-building articles on spiritual growth, prayer, and living rooted in Jesus Christ.',
+            'description' => $seoDesc,
             'inLanguage'  => 'en-IN',
             'publisher'   => [
                 '@type' => 'Organization',
@@ -118,13 +122,13 @@ class Home extends Component
 
         return view('livewire.home', compact('posts', 'categories', 'tags', 'activePost'))
             ->layout('components.layouts.app', [
-                'title'          => $siteTitle . ' — Devotional Blog | ' . $siteSubtitle,
-                'description'    => $siteTitle . ' is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
-                'keywords'       => 'Christian devotional blog, Bible study, spiritual growth, faith, rooted in Christ, prayer, scripture, Jesus, devotional articles',
+                'title'          => $seoTitle,
+                'description'    => $seoDesc,
+                'keywords'       => $seoKeywords,
                 'canonical'      => url('/'),
                 'ogType'         => 'website',
-                'ogTitle'        => $siteTitle . ' — Devotional Blog | ' . $siteSubtitle,
-                'ogDescription'  => $siteTitle . ' is a Christian devotional blog anchored in Scripture, sharing faith-building articles on spiritual growth, prayer, and living rooted in Jesus.',
+                'ogTitle'        => $seoTitle,
+                'ogDescription'  => $seoDesc,
                 'jsonLd'         => $jsonLd,
             ]);
     }

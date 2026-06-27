@@ -26,14 +26,18 @@ class About extends Component
         $biography   = $this->biography;
         $description = \Str::limit(strip_tags($biography), 155);
 
+        $seoTitle = Setting::getVal('seo_about_title') ?: ('About the Author — ' . $siteTitle);
+        $seoDesc = Setting::getVal('seo_about_description') ?: ('Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture and rooted in Jesus.');
+        $seoKeywords = Setting::getVal('seo_about_keywords') ?: ('about, Christian author, devotional blogger, ' . $siteTitle . ', faith, scripture');
+
         // --- JSON-LD: AboutPage ---
         $aboutJsonLd = json_encode([
             '@context'    => 'https://schema.org',
             '@type'       => 'AboutPage',
             '@id'         => url('/about'),
-            'name'        => 'About the Author — ' . $siteTitle,
+            'name'        => $seoTitle,
             'url'         => url('/about'),
-            'description' => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture.',
+            'description' => $seoDesc,
             'isPartOf'    => ['@type' => 'WebSite', '@id' => url('/') . '/#website'],
             'mainEntity'  => [
                 '@type'       => 'Person',
@@ -48,13 +52,13 @@ class About extends Component
 
         return view('livewire.about')
             ->layout('components.layouts.app', [
-                'title'         => 'About the Author — ' . $siteTitle,
-                'description'   => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture and rooted in Jesus.',
-                'keywords'      => 'about, Christian author, devotional blogger, ' . $siteTitle . ', faith, scripture',
+                'title'         => $seoTitle,
+                'description'   => $seoDesc,
+                'keywords'      => $seoKeywords,
                 'canonical'     => url('/about'),
                 'ogType'        => 'profile',
-                'ogTitle'       => 'About the Author — ' . $siteTitle,
-                'ogDescription' => 'Learn about the author behind ' . $siteTitle . ', a devotional blog sharing faith-building articles grounded in Scripture.',
+                'ogTitle'       => $seoTitle,
+                'ogDescription' => $seoDesc,
                 'jsonLd'        => $jsonLd,
             ]);
     }
