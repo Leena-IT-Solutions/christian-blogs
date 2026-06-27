@@ -2,6 +2,7 @@
 
 use App\Livewire\About;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Tags;
 use App\Livewire\Admin\Comments;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Login;
@@ -55,6 +56,7 @@ Route::post('/admin/logout', function () {
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
     Route::get('/categories', Categories::class)->name('admin.categories');
+    Route::get('/tags', Tags::class)->name('admin.tags');
     Route::get('/posts', PostIndex::class)->name('admin.posts.index');
     Route::get('/posts/create', PostCreate::class)->name('admin.posts.create');
     Route::get('/posts/{id}/edit', PostEdit::class)->name('admin.posts.edit');

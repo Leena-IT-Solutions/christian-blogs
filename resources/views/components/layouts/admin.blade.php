@@ -94,6 +94,15 @@
                         Categories
                     </a>
                 </li>
+                <li class="admin-nav-item {{ request()->is('admin/tags') ? 'active' : '' }}">
+                    <a href="/admin/tags">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.586 2.293a2 2 0 012.828 0l7.586 7.586a2 2 0 010 2.828l-7.586 7.586a2 2 0 01-2.828 0L2.293 12.707a2 2 0 010-2.828l7.586-7.586z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6h.01" />
+                        </svg>
+                        Tags
+                    </a>
+                </li>
                 <li class="admin-nav-item {{ request()->is('admin/posts*') ? 'active' : '' }}">
                     <a href="/admin/posts">
                         <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
