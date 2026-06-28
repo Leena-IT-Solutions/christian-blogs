@@ -41,9 +41,9 @@ class Settings extends Component
         'site_title' => 'required|string|max:255',
         'site_subtitle' => 'required|string|max:255',
         'about_text' => 'required|string',
-        'about_image' => 'nullable|image|max:2048', // 2MB Max
-        'site_logo' => 'nullable|image|max:1024', // 1MB Max
-        'site_favicon' => 'nullable|image|max:512', // 512KB Max
+        'about_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', // 5MB Max
+        'site_logo' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', // 2MB Max
+        'site_favicon' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,ico|max:1024', // 1MB Max
         'use_logo_as_favicon' => 'nullable|boolean',
         'facebook_link' => 'nullable|url',
         'instagram_link' => 'nullable|url',
@@ -111,15 +111,22 @@ class Settings extends Component
         if ($this->site_logo) {
             // Delete old logo if exists
             if ($this->existing_site_logo) {
-                $oldLogoPath = public_path($this->existing_site_logo);
+                $oldLogoPath = public_path(str_replace('storage/', '', $this->existing_site_logo));
                 if (file_exists($oldLogoPath)) {
                     @unlink($oldLogoPath);
+                }
+                $oldLogoPathSym = public_path($this->existing_site_logo);
+                if ($oldLogoPathSym !== $oldLogoPath && file_exists($oldLogoPathSym)) {
+                    @unlink($oldLogoPathSym);
                 }
             }
 
             $filename = 'logo_' . time() . '.' . $this->site_logo->getClientOriginalExtension();
-            $path = $this->site_logo->storeAs('uploads', $filename, 'public');
-            $this->existing_site_logo = 'storage/' . $path;
+            if (!file_exists(public_path('uploads'))) {
+                @mkdir(public_path('uploads'), 0755, true);
+            }
+            $this->site_logo->move(public_path('uploads'), $filename);
+            $this->existing_site_logo = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'site_logo'], ['value' => $this->existing_site_logo]);
             $this->reset('site_logo');
@@ -129,15 +136,22 @@ class Settings extends Component
         if ($this->site_favicon) {
             // Delete old favicon if exists
             if ($this->existing_site_favicon) {
-                $oldFaviconPath = public_path($this->existing_site_favicon);
+                $oldFaviconPath = public_path(str_replace('storage/', '', $this->existing_site_favicon));
                 if (file_exists($oldFaviconPath)) {
                     @unlink($oldFaviconPath);
+                }
+                $oldFaviconPathSym = public_path($this->existing_site_favicon);
+                if ($oldFaviconPathSym !== $oldFaviconPath && file_exists($oldFaviconPathSym)) {
+                    @unlink($oldFaviconPathSym);
                 }
             }
 
             $filename = 'favicon_' . time() . '.' . $this->site_favicon->getClientOriginalExtension();
-            $path = $this->site_favicon->storeAs('uploads', $filename, 'public');
-            $this->existing_site_favicon = 'storage/' . $path;
+            if (!file_exists(public_path('uploads'))) {
+                @mkdir(public_path('uploads'), 0755, true);
+            }
+            $this->site_favicon->move(public_path('uploads'), $filename);
+            $this->existing_site_favicon = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'site_favicon'], ['value' => $this->existing_site_favicon]);
             $this->reset('site_favicon');
@@ -147,15 +161,22 @@ class Settings extends Component
         if ($this->about_image) {
             // Delete old profile image if exists
             if ($this->existing_about_image) {
-                $oldImagePath = public_path($this->existing_about_image);
+                $oldImagePath = public_path(str_replace('storage/', '', $this->existing_about_image));
                 if (file_exists($oldImagePath)) {
                     @unlink($oldImagePath);
+                }
+                $oldImagePathSym = public_path($this->existing_about_image);
+                if ($oldImagePathSym !== $oldImagePath && file_exists($oldImagePathSym)) {
+                    @unlink($oldImagePathSym);
                 }
             }
 
             $filename = 'profile_' . time() . '.' . $this->about_image->getClientOriginalExtension();
-            $path = $this->about_image->storeAs('uploads', $filename, 'public');
-            $this->existing_about_image = 'storage/' . $path;
+            if (!file_exists(public_path('uploads'))) {
+                @mkdir(public_path('uploads'), 0755, true);
+            }
+            $this->about_image->move(public_path('uploads'), $filename);
+            $this->existing_about_image = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'about_image'], ['value' => $this->existing_about_image]);
             $this->reset('about_image');

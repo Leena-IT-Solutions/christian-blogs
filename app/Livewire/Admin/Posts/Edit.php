@@ -35,7 +35,7 @@ class Edit extends Component
             'status' => 'required|in:draft,published',
             'selectedTags' => 'nullable|array',
             'selectedTags.*' => 'exists:tags,id',
-            'image' => 'nullable|image|max:2048', // 2MB Max
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', // 5MB Max
         ];
     }
 
@@ -68,15 +68,22 @@ class Edit extends Component
         if ($this->image) {
             // Delete old image if exists
             if ($this->existingImage) {
-                $oldImagePath = public_path($this->existingImage);
+                $oldImagePath = public_path(str_replace('storage/', '', $this->existingImage));
                 if (file_exists($oldImagePath)) {
                     @unlink($oldImagePath);
+                }
+                $oldImagePathSym = public_path($this->existingImage);
+                if ($oldImagePathSym !== $oldImagePath && file_exists($oldImagePathSym)) {
+                    @unlink($oldImagePathSym);
                 }
             }
 
             $filename = time() . '_' . Str::random(10) . '.' . $this->image->getClientOriginalExtension();
-            $path = $this->image->storeAs('uploads', $filename, 'public');
-            $imagePath = 'storage/' . $path;
+            if (!file_exists(public_path('uploads'))) {
+                @mkdir(public_path('uploads'), 0755, true);
+            }
+            $this->image->move(public_path('uploads'), $filename);
+            $imagePath = 'uploads/' . $filename;
         }
 
         // Handle published_at logic

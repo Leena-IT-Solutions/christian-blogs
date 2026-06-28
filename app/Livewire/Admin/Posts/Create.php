@@ -33,7 +33,7 @@ class Create extends Component
         'status' => 'required|in:draft,published',
         'selectedTags' => 'nullable|array',
         'selectedTags.*' => 'exists:tags,id',
-        'image' => 'nullable|image|max:2048', // 2MB Max
+        'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp|max:5120', // 5MB Max
     ];
 
     public function updatedTitle($value)
@@ -48,8 +48,11 @@ class Create extends Component
         $imagePath = null;
         if ($this->image) {
             $filename = time() . '_' . Str::random(10) . '.' . $this->image->getClientOriginalExtension();
-            $path = $this->image->storeAs('uploads', $filename, 'public');
-            $imagePath = 'storage/' . $path;
+            if (!file_exists(public_path('uploads'))) {
+                @mkdir(public_path('uploads'), 0755, true);
+            }
+            $this->image->move(public_path('uploads'), $filename);
+            $imagePath = 'uploads/' . $filename;
         }
 
         $post = Post::create([
