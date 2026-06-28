@@ -79,10 +79,13 @@ class Edit extends Component
             }
 
             $filename = time() . '_' . Str::random(10) . '.' . $this->image->getClientOriginalExtension();
-            if (!file_exists(public_path('uploads'))) {
-                @mkdir(public_path('uploads'), 0755, true);
+            $targetPath = public_path('uploads/' . $filename);
+            if (!file_exists(dirname($targetPath))) {
+                @mkdir(dirname($targetPath), 0755, true);
             }
-            $this->image->move(public_path('uploads'), $filename);
+            if (!copy($this->image->getRealPath(), $targetPath)) {
+                throw new \Exception("Could not copy uploaded image to {$targetPath}. Please check folder permissions.");
+            }
             $imagePath = 'uploads/' . $filename;
         }
 

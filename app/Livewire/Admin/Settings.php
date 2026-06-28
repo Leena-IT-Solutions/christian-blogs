@@ -122,10 +122,13 @@ class Settings extends Component
             }
 
             $filename = 'logo_' . time() . '.' . $this->site_logo->getClientOriginalExtension();
-            if (!file_exists(public_path('uploads'))) {
-                @mkdir(public_path('uploads'), 0755, true);
+            $targetPath = public_path('uploads/' . $filename);
+            if (!file_exists(dirname($targetPath))) {
+                @mkdir(dirname($targetPath), 0755, true);
             }
-            $this->site_logo->move(public_path('uploads'), $filename);
+            if (!copy($this->site_logo->getRealPath(), $targetPath)) {
+                throw new \Exception("Could not copy uploaded logo to {$targetPath}. Please check folder permissions.");
+            }
             $this->existing_site_logo = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'site_logo'], ['value' => $this->existing_site_logo]);
@@ -147,10 +150,13 @@ class Settings extends Component
             }
 
             $filename = 'favicon_' . time() . '.' . $this->site_favicon->getClientOriginalExtension();
-            if (!file_exists(public_path('uploads'))) {
-                @mkdir(public_path('uploads'), 0755, true);
+            $targetPath = public_path('uploads/' . $filename);
+            if (!file_exists(dirname($targetPath))) {
+                @mkdir(dirname($targetPath), 0755, true);
             }
-            $this->site_favicon->move(public_path('uploads'), $filename);
+            if (!copy($this->site_favicon->getRealPath(), $targetPath)) {
+                throw new \Exception("Could not copy uploaded favicon to {$targetPath}. Please check folder permissions.");
+            }
             $this->existing_site_favicon = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'site_favicon'], ['value' => $this->existing_site_favicon]);
@@ -172,10 +178,13 @@ class Settings extends Component
             }
 
             $filename = 'profile_' . time() . '.' . $this->about_image->getClientOriginalExtension();
-            if (!file_exists(public_path('uploads'))) {
-                @mkdir(public_path('uploads'), 0755, true);
+            $targetPath = public_path('uploads/' . $filename);
+            if (!file_exists(dirname($targetPath))) {
+                @mkdir(dirname($targetPath), 0755, true);
             }
-            $this->about_image->move(public_path('uploads'), $filename);
+            if (!copy($this->about_image->getRealPath(), $targetPath)) {
+                throw new \Exception("Could not copy uploaded profile image to {$targetPath}. Please check folder permissions.");
+            }
             $this->existing_about_image = 'uploads/' . $filename;
             
             Setting::updateOrCreate(['key' => 'about_image'], ['value' => $this->existing_about_image]);

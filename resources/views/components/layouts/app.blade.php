@@ -255,7 +255,7 @@
                 @endauth
             </nav>
             <p style="font-size: 0.8rem; margin-top: 16px; opacity: 0.8;">
-                Designed and maintained by <a href="https://leenaitsolutions.in" target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent-color);">LITS</a>
+                Designed and Developed by <a href="https://leenaitsolutions.in" target="_blank" rel="noopener" style="text-decoration: underline; color: var(--accent-color);">Leena IT Solutions</a>
             </p>
         </div>
     </footer>
