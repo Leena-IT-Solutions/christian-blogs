@@ -56,6 +56,13 @@
             }
             .spinner-icon {
                 animation: spin 1s linear infinite;
+                display: none;
+                width: 14px;
+                height: 14px;
+                border: 2px solid #fff;
+                border-top: 2px solid transparent;
+                border-radius: 50%;
+                box-sizing: border-box;
             }
         </style>
         
@@ -87,7 +94,7 @@
                     <svg wire:loading.remove wire:target="updateSite" style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 15H18" />
                     </svg>
-                    <span wire:loading wire:target="updateSite" class="spinner-icon" style="border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; width: 14px; height: 14px; display: inline-block; box-sizing: border-box;"></span>
+                    <span wire:loading.inline-block wire:target="updateSite" class="spinner-icon"></span>
                     <span wire:loading.remove wire:target="updateSite">Update from GitHub</span>
                     <span wire:loading wire:target="updateSite">Updating Site...</span>
                 </button>
