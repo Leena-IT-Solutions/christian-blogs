@@ -24,9 +24,10 @@ class Dashboard extends Component
     public function loadCurrentCommit()
     {
         try {
-            $commitHash = shell_exec('git rev-parse --short HEAD');
-            $commitMessage = shell_exec('git log -1 --pretty=%B');
-            $branch = shell_exec('git rev-parse --abbrev-ref HEAD');
+            $basePath = base_path();
+            $commitHash = shell_exec('git -c safe.directory="' . $basePath . '" rev-parse --short HEAD');
+            $commitMessage = shell_exec('git -c safe.directory="' . $basePath . '" log -1 --pretty=%B');
+            $branch = shell_exec('git -c safe.directory="' . $basePath . '" rev-parse --abbrev-ref HEAD');
             
             if ($commitHash) {
                 $this->currentCommit = trim($branch) . ' @ ' . trim($commitHash) . ' (' . trim(strtok($commitMessage, "\n")) . ')';
@@ -43,9 +44,11 @@ class Dashboard extends Component
         $this->isUpdating = true;
         $this->updateOutput = "Starting update process...\n\n";
 
+        $basePath = base_path();
+
         // Commands to run
         $commands = [
-            'git pull 2>&1',
+            'git -c safe.directory="' . $basePath . '" pull 2>&1',
             'php artisan migrate --force 2>&1',
             'php artisan optimize:clear 2>&1',
         ];
