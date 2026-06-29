@@ -54,7 +54,9 @@ class PostShow extends Component
         // --- SEO Data ---
         $excerpt      = $post->excerpt ?? \Str::limit(strip_tags($post->body), 155);
         $canonical    = url('/posts/' . $post->slug);
-        $ogImage      = $post->featured_image ? asset($post->featured_image) : asset('images/og-default.jpg');
+        $defaultOgImageSetting = Setting::getVal('og_image');
+        $defaultOgImage = $defaultOgImageSetting ? asset($defaultOgImageSetting) : asset('images/og-default.jpg');
+        $ogImage      = $post->featured_image ? asset($post->featured_image) : $defaultOgImage;
         $publishedAt  = $post->published_at ?? $post->created_at;
         $updatedAt    = $post->updated_at;
         $category     = $post->category->name ?? 'Devotional';
@@ -80,7 +82,7 @@ class PostShow extends Component
                 '@id'   => url('/') . '/#organization',
                 'name'  => $siteTitle,
                 'url'   => url('/'),
-                'logo'  => ['@type' => 'ImageObject', 'url' => asset('images/og-default.jpg'), 'width' => 1200, 'height' => 630],
+                'logo'  => ['@type' => 'ImageObject', 'url' => $defaultOgImage, 'width' => 1200, 'height' => 630],
             ],
             'articleSection'   => $category,
             'keywords'         => $keywords,

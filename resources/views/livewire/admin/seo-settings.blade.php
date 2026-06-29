@@ -88,6 +88,43 @@
                     </div>
                 </div>
 
+                <!-- Social Share Image -->
+                <div class="panel-card" style="margin-bottom: 0;">
+                    <h2 class="panel-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">Default Social Sharing Image (OG Image)</h2>
+                    <p style="font-size: 0.9rem; color: var(--admin-text-muted); margin-bottom: 15px;">
+                        This image is shown when you share links to your website on social networks like WhatsApp, Facebook, Twitter, etc. Individual blog posts will automatically use their own featured images, while other pages (like Home, About, and Contact) will fall back to this image.
+                    </p>
+                    
+                    <div class="admin-form-group">
+                        <label class="admin-label">Upload Sharing Image (Leave blank to keep current)</label>
+                        <div style="display: flex; align-items: center; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+                            @if ($og_image)
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: #4ade80; font-weight: 600;">Previewing Uploaded:</span>
+                                    <img src="{{ $og_image->temporaryUrl() }}" style="max-height: 120px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm);" alt="OG Image Preview">
+                                </div>
+                            @elseif ($existing_og_image)
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: var(--accent-color); font-weight: 600;">Current Sharing Image:</span>
+                                    <img src="{{ asset($existing_og_image) }}" style="max-height: 120px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm);" alt="Current OG Image">
+                                </div>
+                            @else
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <span style="font-size: 0.75rem; color: var(--admin-text-muted); font-weight: 600;">Default Sharing Image:</span>
+                                    <img src="{{ asset('images/og-default.jpg') }}" style="max-height: 120px; width: auto; object-fit: contain; border: 1px solid var(--admin-border); padding: 4px; border-radius: var(--radius-sm); opacity: 0.7;" alt="Default OG Image">
+                                </div>
+                            @endif
+                            
+                            <div style="flex-grow: 1; min-width: 200px;">
+                                <input type="file" wire:model="og_image" accept="image/*" class="admin-control" style="padding: 8px;">
+                                <div wire:loading wire:target="og_image" style="font-size: 0.85rem; color: var(--accent-color); margin-top: 4px;">Uploading...</div>
+                            </div>
+                        </div>
+                        <small style="color: var(--admin-text-muted); display: block; margin-top: 8px;">Recommended dimensions: 1200x630 pixels (aspect ratio 1.91:1) for optimal rendering across WhatsApp, Facebook, and Twitter. Max size: 5MB.</small>
+                        @error('og_image') <span class="invalid-feedback" style="display: block; margin-top: 8px;">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
             </div>
 
             <!-- Right Side: Sidebar info & submit button -->

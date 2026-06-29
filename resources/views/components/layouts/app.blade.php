@@ -14,6 +14,9 @@
     } else {
         $faviconUrl = asset('favicon.png');
     }
+
+    $ogImageSetting = \App\Models\Setting::getVal('og_image');
+    $defaultOgImage = $ogImageSetting ? asset($ogImageSetting) : asset('images/og-default.jpg');
 @endphp
 @props([
     'title'                => null,
@@ -66,7 +69,7 @@
     <meta property="og:title" content="{{ $ogTitle ?? $resolvedTitle }}">
     <meta property="og:description" content="{{ $ogDescription ?? $resolvedDescription }}">
     <meta property="og:url" content="{{ $canonical ?? url()->current() }}">
-    <meta property="og:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
+    <meta property="og:image" content="{{ $ogImage ?? $defaultOgImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="{{ $ogTitle ?? $resolvedTitle }}">
@@ -94,7 +97,7 @@
     <meta name="twitter:card" content="{{ $twitterCard ?? 'summary_large_image' }}">
     <meta name="twitter:title" content="{{ $ogTitle ?? $resolvedTitle }}">
     <meta name="twitter:description" content="{{ $ogDescription ?? $resolvedDescription }}">
-    <meta name="twitter:image" content="{{ $ogImage ?? asset('images/og-default.jpg') }}">
+    <meta name="twitter:image" content="{{ $ogImage ?? $defaultOgImage }}">
     <meta name="twitter:image:alt" content="{{ $ogTitle ?? $resolvedTitle }}">
 
     <script type="application/ld+json">
